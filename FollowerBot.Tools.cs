@@ -98,6 +98,17 @@ namespace FlickrFollowerBot
             }
         }
 
+        private void ClickIframeElementIfPresent(string cssIframe, string cssSelector)
+        {
+            if (Selenium.SwitchToIframe(cssIframe))
+            {
+                if (Selenium.ClickIfPresent(cssSelector))
+                {
+                    WaitHumanizer();
+                }
+            }
+        }
+
         private static IEnumerable<string> GetTasks(string runTasks, bool botSaveAfterEachAction, bool botSaveOnEnd, bool botSaveOnLoop, int botLoopTaskLimit)
         {
             StringBuilder tasks = new StringBuilder(runTasks.ToUpperInvariant());
