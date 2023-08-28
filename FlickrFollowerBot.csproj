@@ -6,14 +6,14 @@
     <RootNamespace>FlickrFollowerBot</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <RepositoryUrl>https://github.com/smf33/FlickrFollowerBot.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/zhutra/FlickrFollowerBot.git</RepositoryUrl>
     <RepositoryType />
-    <PackageProjectUrl>https://github.com/smf33/FlickrFollowerBot</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/zhutra/FlickrFollowerBot</PackageProjectUrl>
     <PackageTags />
     <NeutralLanguage />
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Samuel F. - https://github.com/smf33</Copyright>
-    <Authors>Samuel F. - https://github.com/smf33</Authors>
+    <Copyright>Samuel F.</Copyright>
+    <Authors>Miguel S., Samuel F.</Authors>
     <PackageLicenseFile></PackageLicenseFile>
   </PropertyGroup>
 
@@ -24,7 +24,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="89.0.4389.2300" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="116.0.5845.9600" />
     <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
   </ItemGroup>
 
