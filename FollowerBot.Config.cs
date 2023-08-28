@@ -82,6 +82,11 @@ namespace FlickrFollowerBot
             internal string UrlRecentContactPost;
             internal string UrlRoot;
             internal string UrlSearch;
+            internal string UrlContactsInactive;
+            internal string ChromeBinaryLocation;
+            internal string ChromeDriverLocation;
+            internal string CssAcceptCookies;
+            internal string CssCookiesIframe;
         }
 
         private Configuration Config;
@@ -136,7 +141,12 @@ namespace FlickrFollowerBot
                     CssPhotosFaved = config["CssPhotosFaved"],
                     CssPhotos = config["CssPhotos"],
                     CssPhotoFave = config["CssPhotoFave"],
-                    CssPhotoFaved = config["CssPhotoFaved"]
+                    CssPhotoFaved = config["CssPhotoFaved"],
+                    UrlContactsInactive = config["UrlContactsInactive"],
+                    ChromeBinaryLocation = config["ChromeBinaryLocation"],
+                    ChromeDriverLocation = config["ChromeDriverLocation"],
+                    CssAcceptCookies = config["CssAcceptCookies"],
+                    CssCookiesIframe = config["CssCookiesIframe"]
                 };
 
                 try
