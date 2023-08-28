@@ -55,6 +55,7 @@ namespace FlickrFollowerBot
         private void PostAuthInit()
         {
             ClickWaitIfPresent(Config.CssLoginWarning);
+            ClickIframeElementIfPresent(Config.CssCookiesIframe, Config.CssAcceptCookies);
 
             if (!Data.MyContactsUpdate.HasValue
                 || Config.BotCacheTimeLimitHours <= 0
@@ -285,7 +286,7 @@ namespace FlickrFollowerBot
             {
                 if (!MoveTo(uri))
                 {
-                    Log.LogWarning("ACTION STOPED : FLICKR RETURN ERROR 500 ON ({0})", uri);
+                    Log.LogWarning("ACTION STOPPED : FLICKR RETURN ERROR 500 ON ({0})", uri);
                     break; // no retry
                 }
                 try
@@ -295,7 +296,7 @@ namespace FlickrFollowerBot
                     {
                         Selenium.Click(Config.CssContactFollow);
                         Data.MyContacts.Add(uri);
-                        WaitHumanizer();// the url relad may break a waiting ball
+                        WaitHumanizer();// the url reload may break a waiting ball
 
                         // issue detection : Manage limit to 20 follow on a new account : https://www.flickr.com/help/forum/en-us/72157651299881165/  Then there seem to be another limit
                         if (Selenium.GetElements(Config.CssContactFollow).Any()) // may be slow so will wait if required
@@ -303,7 +304,7 @@ namespace FlickrFollowerBot
                             WaitHumanizer();// give a last chance
                             if (Selenium.GetElements(Config.CssContactFollow, true, true).Any())
                             {
-                                Log.LogWarning("ACTION STOPED : SEEMS USER CAN'T FOLLOW ({0}) ANYMORE", uri);
+                                Log.LogWarning("ACTION STOPPED : SEEMS USER CAN'T FOLLOW ({0}) ANYMORE", uri);
                                 break; // no retry
                             }
                         }
@@ -313,7 +314,7 @@ namespace FlickrFollowerBot
                             WaitHumanizer();// give a last chance...
                             if (Selenium.GetElements(Config.CssModalWaiterBalls, true, true).Any()) // will not wait
                             {
-                                Log.LogWarning("ACTION STOPED : SEEMS FLICKR HANG ON THIS CONTACT ({0})", uri);
+                                Log.LogWarning("ACTION STOPPED : SEEMS FLICKR HANG ON THIS CONTACT ({0})", uri);
                                 break; // no retry
                             }
                         }
@@ -322,7 +323,7 @@ namespace FlickrFollowerBot
                 }
                 catch (Exception ex)
                 {
-                    Log.LogWarning(default, ex, "ACTION STOPED : {0}", ex.GetBaseException().Message);
+                    Log.LogWarning(default, ex, "ACTION STOPPED : {0}", ex.GetBaseException().Message);
                     break; // stop this action
                 }
             }
@@ -337,7 +338,7 @@ namespace FlickrFollowerBot
                 WaitHumanizer();    // try again
                 if (!MoveTo(url))
                 {
-                    Log.LogWarning("ACTION STOPED : FLICKR RETURN ERROR 500 ON ({0})", url);
+                    Log.LogWarning("ACTION STOPPED : FLICKR RETURN ERROR 500 ON ({0})", url);
                     inError = true;
                 }
             }
@@ -352,10 +353,10 @@ namespace FlickrFollowerBot
                 }
                 catch (OpenQA.Selenium.ElementClickInterceptedException ex)  // check if we are in a Flickr Freeze (fluid-modal-overlay/balls over all)
                 {
-                    Log.LogWarning(default, ex, "ACTION STOPED : FLICKER SEEMS TO NEED A RELOAD ({0})", ex.GetBaseException().Message);
+                    Log.LogWarning(default, ex, "ACTION STOPPED : FLICKER SEEMS TO NEED A RELOAD ({0})", ex.GetBaseException().Message);
                     inError = true;
                 }
-                WaitHumanizer();// the url relad may break a waiting ball
+                WaitHumanizer();// the url reload may break a waiting ball
 
                 // fav issue detection
                 if (!inError && !Selenium.GetElements(Config.CssPhotoFaved).Any()) // will wait a little if required because it s an expected state
@@ -363,7 +364,7 @@ namespace FlickrFollowerBot
                     WaitHumanizer();// give a last chance...
                     if (!Selenium.GetElements(Config.CssPhotoFaved, true, true).Any()) // will wait a little if required because it s an expected state
                     {
-                        Log.LogWarning("ACTION STOPED : SEEMS USER ({0}) CAN'T FAV ANYMORE", url);
+                        Log.LogWarning("ACTION STOPPED : SEEMS USER ({0}) CAN'T FAV ANYMORE", url);
                         inError = true;
                     }
                 }
@@ -373,7 +374,7 @@ namespace FlickrFollowerBot
                     WaitHumanizer();// give a last chance...
                     if (Selenium.GetElements(Config.CssModalWaiterBalls, true, true).Any()) // will not wait
                     {
-                        Log.LogWarning("ACTION STOPED : SEEMS FLICKR HANG ON THIS PICTURE ({0})", url);
+                        Log.LogWarning("ACTION STOPPED : SEEMS FLICKR HANG ON THIS PICTURE ({0})", url);
                         inError = true;
                     }
                 }
@@ -391,7 +392,7 @@ namespace FlickrFollowerBot
                 {
                     if (!MoveTo(uri))
                     {
-                        Log.LogWarning("ACTION STOPED : FLICKR RETURN ERROR 500 ON ({0})", uri);
+                        Log.LogWarning("ACTION STOPPED : FLICKR RETURN ERROR 500 ON ({0})", uri);
                         break; // no retry
                     }
                     try
@@ -423,7 +424,7 @@ namespace FlickrFollowerBot
                     }
                     catch (Exception ex)
                     {
-                        Log.LogWarning(default, ex, "ACTION STOPED : {0}", ex.GetBaseException().Message);
+                        Log.LogWarning(default, ex, "ACTION STOPPED : {0}", ex.GetBaseException().Message);
                         break; // stop this action
                     }
                 }
@@ -477,10 +478,7 @@ namespace FlickrFollowerBot
                     if (Selenium.GetElements(Config.CssContactFollowed).Any()) // manage the already unfollowed like this
                     {
                         Selenium.Click(Config.CssContactFollowed);
-                        WaitHumanizer();// the url relad may break a waiting ball
-
-                        Selenium.Click(Config.CssContactUnfollow);
-                        WaitHumanizer();// the url relad may break a waiting ball
+                        WaitHumanizer();// the url reload may break a waiting ball
 
                         Data.MyContacts.Remove(uri);
                         MyContactsInTryout.Remove(uri);
@@ -490,7 +488,7 @@ namespace FlickrFollowerBot
                 }
                 catch (Exception ex)
                 {
-                    Log.LogWarning(default, ex, "ACTION STOPED : {0}", ex.GetBaseException().Message);
+                    Log.LogWarning(default, ex, "ACTION STOPPED : {0}", ex.GetBaseException().Message);
                     break; // stop this action
                 }
             }
@@ -535,7 +533,7 @@ namespace FlickrFollowerBot
                 }
                 catch (Exception ex)
                 {
-                    Log.LogWarning(default, ex, "ACTION STOPED : {0}", ex.GetBaseException().Message);
+                    Log.LogWarning(default, ex, "ACTION STOPPED : {0}", ex.GetBaseException().Message);
                     break; // stop this action
                 }
             }
