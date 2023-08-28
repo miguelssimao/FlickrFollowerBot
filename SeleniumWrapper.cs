@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,14 +14,14 @@ namespace FlickrFollowerBot
     {
         private readonly IJavaScriptExecutor JsDriver;
 
-        private static ChromeOptions GetOptions(string w, string h, IEnumerable<string> seleniumBrowserArguments)
+        private static ChromeOptions GetOptions(string w, string h, string binary, IEnumerable<string> seleniumBrowserArguments)
         {
             ChromeOptions options = new ChromeOptions
             {
                 PageLoadStrategy = PageLoadStrategy.Normal
             };
-            options.AddArgument("--window-size=" + w + "," + h); // try to randomize the setup in order to reduce detection
-                                                                 // configurable
+            options.AddArgument("--chrome_binary=\""+binary+"\"");
+            options.AddArgument("--window-size=" + w + "," + h);
             foreach (string a in seleniumBrowserArguments)
             {
                 options.AddArgument(a);
@@ -29,20 +29,20 @@ namespace FlickrFollowerBot
             return options;
         }
 
-        public static SeleniumWrapper NewChromeSeleniumWrapper(string path, string w, string h, IEnumerable<string> seleniumBrowserArguments, float botSeleniumTimeoutSec)
+        public static SeleniumWrapper NewChromeSeleniumWrapper(string path, string w, string h, string binary, IEnumerable<string> seleniumBrowserArguments, float botSeleniumTimeoutSec)
         {
-            ChromeOptions options = GetOptions(w, h, seleniumBrowserArguments);
+            ChromeOptions options = GetOptions(w, h, binary, seleniumBrowserArguments);
             return new SeleniumWrapper(new ChromeDriver(path, options), botSeleniumTimeoutSec);
         }
 
         /// <param name="uri">exemple http://127.0.0.1:4444/wd/hub </param>
-        public static SeleniumWrapper NewRemoteSeleniumWrapper(string configUri, string w, string h, IEnumerable<string> seleniumBrowserArguments, float botSeleniumTimeoutSec)
+        public static SeleniumWrapper NewRemoteSeleniumWrapper(string configUri, string w, string h, string binary, IEnumerable<string> seleniumBrowserArguments, float botSeleniumTimeoutSec)
         {
             if (!Uri.TryCreate(configUri, UriKind.Absolute, out Uri uri)) // may be a hostname ?
             {
                 uri = new Uri("http://" + configUri + ":4444/wd/hub");
             }
-            ChromeOptions options = GetOptions(w, h, seleniumBrowserArguments);
+            ChromeOptions options = GetOptions(w, h, binary, seleniumBrowserArguments);
             return new SeleniumWrapper(new RemoteWebDriver(uri, options), botSeleniumTimeoutSec);
         }
 
@@ -127,6 +127,23 @@ namespace FlickrFollowerBot
         {
             WebDriver.FindElement(By.CssSelector(cssSelector))
                 .Click();
+        }
+
+        public bool SwitchToIframe(string cssIframe)
+        {
+            WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+            IEnumerable<IWebElement> frame = WebDriver.FindElements(By.CssSelector("iframe" + cssIframe));
+            WebDriver.Manage().Timeouts().ImplicitWait = NormalWaiter;
+
+            if (frame.Any())
+            {
+                WebDriver.SwitchTo().Frame(frame.First());
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void InputWrite(string cssSelector, string text)
