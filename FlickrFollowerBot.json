@@ -37,7 +37,7 @@
 	"BotUserSaveFolder": null,
 	"BotWaitTaskMaxWaitMs": 7200,
 	"BotWaitTaskMinWaitMs": 3600,
-	"ChromeBinaryLocation": "chrome-win64",
+	"ChromeBinaryLocation": "chrome-win64\\chrome.exe",
 	"ChromeDriverLocation": "chrome-win64",
 	"ContactsLastUpload": 12,
 	"CssAcceptCookies": ".acceptAll",
