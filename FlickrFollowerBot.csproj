@@ -6,9 +6,9 @@
     <RootNamespace>FlickrFollowerBot</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <RepositoryUrl>https://github.com/zhutra/FlickrFollowerBot.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/miglsimao/FlickrFollowerBot.git</RepositoryUrl>
     <RepositoryType />
-    <PackageProjectUrl>https://github.com/zhutra/FlickrFollowerBot</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/miglsimao/FlickrFollowerBot</PackageProjectUrl>
     <PackageTags />
     <NeutralLanguage />
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
