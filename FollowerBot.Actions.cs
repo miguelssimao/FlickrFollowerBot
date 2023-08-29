@@ -282,9 +282,9 @@ namespace FlickrFollowerBot
         private void DoContactsInactiveUnfollow()
         {
             int removed = 0;
-            int todo = PseudoRand.Next(Config.BotFollowTaskInactiveMinLimit, Config.BotFollowTaskInactiveMaxLimit);
             int stop = Config.ContactsLastUpload;
             string url = Data.UserContactUrl + Config.UrlContactsInactive;
+            int todo = PseudoRand.Next(Config.BotFollowTaskInactiveMinLimit, Config.BotFollowTaskInactiveMaxLimit);
             while (todo > 0)
             {
                 if (!MoveTo(url, true))
@@ -294,8 +294,8 @@ namespace FlickrFollowerBot
                 }
                 try
                 {
-                    int rowsCount = Selenium.GetElementsCount(Config.CssContactTable);
                     int resultInteger;
+                    int rowsCount = Selenium.GetElementsCount(Config.CssContactTable);
                     for (int i = 0; i < rowsCount; ++i)
                     {
                         resultInteger = 0;
@@ -316,8 +316,8 @@ namespace FlickrFollowerBot
                             Selenium.ClickThisIfClickable(Config.CssContactEdit, i);
                             Selenium.Click(Config.CssContactCheck);
                             Selenium.Click(Config.CssContactRemove);
-                            WaitHumanizer();
                             Log.LogDebug("REMOVED {0}", Selenium.GetElementHref(Config.CssContactUrl, i));
+                            WaitHumanizer();
                             ++removed;
                         }
                         else
