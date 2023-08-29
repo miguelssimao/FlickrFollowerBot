@@ -23,8 +23,8 @@ namespace FlickrFollowerBot
                 PageLoadStrategy = PageLoadStrategy.Normal
             };
             options.AddArgument("--chrome_binary=\""+binary+"\"");
-            options.AddExcludedArguments("excludeSwitches", "enable-logging");
             options.AddArgument("--window-size=" + w + "," + h);
+            options.AddExcludedArguments("excludeSwitches", "enable-logging");
             foreach (string a in seleniumBrowserArguments)
             {
                 options.AddArgument(a);
