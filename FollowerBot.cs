@@ -43,11 +43,11 @@ namespace FlickrFollowerBot
 
             string w = PseudoRand.Next(Config.SeleniumWindowMinW, Config.SeleniumWindowMaxW).ToString(CultureInfo.InvariantCulture);
             string h = PseudoRand.Next(Config.SeleniumWindowMinH, Config.SeleniumWindowMaxH).ToString(CultureInfo.InvariantCulture);
-            string binary = Config.ChromeBinaryLocation;
             if (string.IsNullOrWhiteSpace(Config.SeleniumRemoteServer))
             {
-                Log.LogDebug("NewChromeSeleniumWrapper({0}, {1}, {2})", ExecPath, w, h);
-                Selenium = SeleniumWrapper.NewChromeSeleniumWrapper(Config.ChromeDriverLocation, w, h, binary, Config.SeleniumBrowserArguments, Config.BotSeleniumTimeoutSec);
+                Log.LogDebug("NewChromeSeleniumWrapper({0}, {1}, {2})", Config.ChromeDriverLocation, w, h);
+                Log.LogDebug("--chrome_binary=\"{0}\"", Config.ChromeBinaryLocation);
+                Selenium = SeleniumWrapper.NewChromeSeleniumWrapper(Config.ChromeDriverLocation, w, h, Config.ChromeBinaryLocation, Config.SeleniumBrowserArguments, Config.BotSeleniumTimeoutSec);
             }
             else
             {
@@ -57,7 +57,7 @@ namespace FlickrFollowerBot
                         .Wait();
                 }
                 Log.LogDebug("NewRemoteSeleniumWrapper({0}, {1}, {2})", Config.SeleniumRemoteServer, w, h);
-                Selenium = SeleniumWrapper.NewRemoteSeleniumWrapper(Config.SeleniumRemoteServer, w, h, binary, Config.SeleniumBrowserArguments, Config.BotSeleniumTimeoutSec);
+                Selenium = SeleniumWrapper.NewRemoteSeleniumWrapper(Config.SeleniumRemoteServer, w, h, Config.ChromeBinaryLocation, Config.SeleniumBrowserArguments, Config.BotSeleniumTimeoutSec);
             }
         }
 
