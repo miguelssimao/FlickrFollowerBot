@@ -87,6 +87,17 @@ namespace FlickrFollowerBot
             internal string ChromeDriverLocation;
             internal string CssAcceptCookies;
             internal string CssCookiesIframe;
+            internal int BotFollowTaskInactiveMinLimit;
+            internal int BotFollowTaskInactiveMaxLimit;
+            internal int ContactsLastUpload;
+            internal string CssContactTable;
+            internal string CssContactLast;
+            internal string CssContactUrl;
+            internal string PortugueseMonths;
+            internal string PortugueseYears;
+            internal string CssContactEdit;
+            internal string CssContactCheck;
+            internal string CssContactRemove;
         }
 
         private Configuration Config;
@@ -146,7 +157,15 @@ namespace FlickrFollowerBot
                     ChromeBinaryLocation = config["ChromeBinaryLocation"],
                     ChromeDriverLocation = config["ChromeDriverLocation"],
                     CssAcceptCookies = config["CssAcceptCookies"],
-                    CssCookiesIframe = config["CssCookiesIframe"]
+                    CssCookiesIframe = config["CssCookiesIframe"],
+                    CssContactTable = config["CssContactTable"],
+                    CssContactLast = config["CssContactLast"],
+                    CssContactUrl = config["CssContactUrl"],
+                    PortugueseMonths = config["PortugueseMonths"],
+                    PortugueseYears = config["PortugueseYears"],
+                    CssContactEdit = config["CssContactEdit"],
+                    CssContactCheck = config["CssContactCheck"],
+                    CssContactRemove = config["CssContactRemove"]
                 };
 
                 try
@@ -185,6 +204,9 @@ namespace FlickrFollowerBot
                     Config.SeleniumWindowMinH = int.Parse(config["SeleniumWindowMinH"], CultureInfo.InvariantCulture);
                     Config.SeleniumWindowMinW = int.Parse(config["SeleniumWindowMinW"], CultureInfo.InvariantCulture);
                     Config.SeleniumRemoteServerWarmUpWaitMs = int.Parse(config["SeleniumRemoteServerWarmUpWaitMs"], CultureInfo.InvariantCulture);
+                    Config.BotFollowTaskInactiveMinLimit = int.Parse(config["BotFollowTaskInactiveMinLimit"], CultureInfo.InvariantCulture);
+                    Config.BotFollowTaskInactiveMaxLimit = int.Parse(config["BotFollowTaskInactiveMaxLimit"], CultureInfo.InvariantCulture);
+                    Config.ContactsLastUpload = int.Parse(config["ContactsLastUpload"], CultureInfo.InvariantCulture);
 
                     if (int.TryParse(config["BotLoopTaskLimit"], out int tmpBotLoopTaskLimit))
                     {
