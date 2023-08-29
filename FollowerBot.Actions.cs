@@ -284,7 +284,7 @@ namespace FlickrFollowerBot
             int removed = 0;
             int stop = Config.ContactsLastUpload;
             string url = Data.UserContactUrl + Config.UrlContactsInactive;
-            int todo = PseudoRand.Next(Config.BotFollowTaskInactiveMinLimit, Config.BotFollowTaskInactiveMaxLimit);
+            int todo = PseudoRand.Next(Config.BotUnfollowTaskInactiveMinLimit, Config.BotUnfollowTaskInactiveMaxLimit);
             while (todo > 0)
             {
                 if (!MoveTo(url, true))
