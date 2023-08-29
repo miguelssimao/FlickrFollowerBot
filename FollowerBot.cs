@@ -46,7 +46,7 @@ namespace FlickrFollowerBot
             if (string.IsNullOrWhiteSpace(Config.SeleniumRemoteServer))
             {
                 Log.LogDebug("NewChromeSeleniumWrapper({0}, {1}, {2})", Config.ChromeDriverLocation, w, h);
-                Log.LogDebug("--chrome_binary=\"{0}\"", Config.ChromeBinaryLocation);
+                Log.LogDebug("BinaryLocation=\"{0}\"", Config.ChromeBinaryLocation);
                 Selenium = SeleniumWrapper.NewChromeSeleniumWrapper(Config.ChromeDriverLocation, w, h, Config.ChromeBinaryLocation, Config.SeleniumBrowserArguments, Config.BotSeleniumTimeoutSec);
             }
             else
