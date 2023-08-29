@@ -302,6 +302,7 @@ namespace FlickrFollowerBot
                         string lastUpload = Selenium.GetElementContent(Config.CssContactLast, i).Trim();
                         if (lastUpload.Any(char.IsDigit))
                         {
+                            resultInteger = stop;
                             string[] periodOfTime = lastUpload.Split(' ');
                             if(periodOfTime[1] == Config.PortugueseMonths || periodOfTime[1] == "months" || 
                                 periodOfTime[1] == Config.PortugueseYears || periodOfTime[1] == "years")
