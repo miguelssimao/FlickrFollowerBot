@@ -7,6 +7,8 @@ using Newtonsoft.Json.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace FlickrFollowerBot
 {
@@ -127,6 +129,52 @@ namespace FlickrFollowerBot
         {
             WebDriver.FindElement(By.CssSelector(cssSelector))
                 .Click();
+        }
+
+        public void ClickThis(string cssSelector, int index)
+        {
+            IEnumerable<IWebElement> links = WebDriver.FindElements(By.CssSelector(cssSelector));
+            links.ElementAt(index).Click();
+        }
+
+        public void ClickThisIfClickable(string cssSelector, int index)
+        {
+            if (index == 0)
+            {
+                WaitUntilElementClickable(cssSelector, index).Click();
+            }
+            else
+            {
+                ClickThis(cssSelector, index);
+            }
+        }
+
+        public IWebElement WaitUntilElementClickable(string cssSelector, int timeout = 10)
+        {
+            try
+            {
+                var wait = new WebDriverWait(WebDriver, TimeSpan.FromSeconds(timeout));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(cssSelector + ":first-child")));
+            }
+            catch (NoSuchElementException)
+            {
+                throw;
+            }
+        }
+
+        public int GetElementsCount(string cssSelector)
+        {
+            return WebDriver.FindElements(By.CssSelector(cssSelector)).Count;
+        }
+
+        public string GetElementContent(string cssSelector, int index)
+        {
+            return WebDriver.FindElements(By.CssSelector(cssSelector))[index].Text;
+        }
+
+        public string GetElementHref(string cssSelector, int index)
+        {
+            return WebDriver.FindElements(By.CssSelector(cssSelector))[index].GetAttribute("href");
         }
 
         public bool SwitchToIframe(string cssIframe)
