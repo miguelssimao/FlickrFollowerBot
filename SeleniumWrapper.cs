@@ -20,9 +20,9 @@ namespace FlickrFollowerBot
         {
             ChromeOptions options = new ChromeOptions
             {
-                PageLoadStrategy = PageLoadStrategy.Normal
+                PageLoadStrategy = PageLoadStrategy.Normal,
+                BinaryLocation = binary
             };
-            options.AddArgument("--chrome_binary=\""+binary+"\"");
             options.AddArgument("--window-size=" + w + "," + h);
             options.AddExcludedArguments("excludeSwitches", "enable-logging");
             foreach (string a in seleniumBrowserArguments)
