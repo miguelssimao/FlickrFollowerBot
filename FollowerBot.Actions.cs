@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -276,6 +277,64 @@ namespace FlickrFollowerBot
                 Data.ContactsToFav.Enqueue(needToFollow);
             }
             Log.LogDebug("$ContactsToFav +{0}", Data.ContactsToFav.Count - c);
+        }
+
+        private void DoContactsInactiveUnfollow()
+        {
+            int removed = 0;
+            int todo = PseudoRand.Next(Config.BotFollowTaskInactiveMinLimit, Config.BotFollowTaskInactiveMaxLimit);
+            int stop = Config.ContactsLastUpload;
+            string url = Data.UserContactUrl + Config.UrlContactsInactive;
+            while (todo > 0)
+            {
+                if (!MoveTo(url, true))
+                {
+                    Log.LogWarning("ACTION STOPPED : FLICKR RETURN ERROR 500 ON ({0})", url);
+                    break; // no retry
+                }
+                try
+                {
+                    int rowsCount = Selenium.GetElementsCount(Config.CssContactTable);
+                    int resultInteger;
+                    for (int i = 0; i < rowsCount; ++i)
+                    {
+                        resultInteger = 0;
+                        string lastUpload = Selenium.GetElementContent(Config.CssContactLast, i).Trim();
+                        if (lastUpload.Any(char.IsDigit))
+                        {
+                            string[] periodOfTime = lastUpload.Split(' ');
+                            if(periodOfTime[1] == Config.PortugueseMonths || periodOfTime[1] == "months" || 
+                                periodOfTime[1] == Config.PortugueseYears || periodOfTime[1] == "years")
+                            {
+                                string resultString = Regex.Match(lastUpload, @"\d+").Value;
+                                resultInteger = Int32.Parse(resultString);
+                            }
+                        }
+
+                        if (resultInteger == 0 || (resultInteger != 0 && resultInteger > stop))
+                        {
+                            Selenium.ClickThisIfClickable(Config.CssContactEdit, i);
+                            Selenium.Click(Config.CssContactCheck);
+                            Selenium.Click(Config.CssContactRemove);
+                            WaitHumanizer();
+                            Log.LogDebug("REMOVED {0}", Selenium.GetElementHref(Config.CssContactUrl, i));
+                            ++removed;
+                        }
+                        else
+                        {
+                            Log.LogWarning("ACTION STOPPED : THERE ARE NO MORE INACTIVE USERS TO UNFOLLOW");
+                            break; // no retry
+                        }
+                    }
+                    todo--;
+                }
+                catch (Exception ex)
+                {
+                    Log.LogWarning(default, ex, "ACTION STOPPED : {0}", ex.GetBaseException().Message);
+                    break; // stop this action
+                }
+            }
+            Log.LogDebug("$InactiveContactsToUnfollow -{0}", removed);
         }
 
         private void DoContactsFollow()
