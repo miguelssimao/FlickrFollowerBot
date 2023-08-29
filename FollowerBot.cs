@@ -26,6 +26,7 @@ namespace FlickrFollowerBot
         private const string SearchKeywordsPhotosOnlyStr = "SEARCHKEYWORDS_PHOTOSSONLY";
         private const string SearchKeywordsStr = "SEARCHKEYWORDS";
         private const string WaitStr = "WAIT";
+        private const string DoContactsInactiveUnfollowStr = "DOCONTACTSINACTIVEUNFOLLOW";
 
         private static readonly string ExecPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -134,6 +135,10 @@ namespace FlickrFollowerBot
 
                     case SaveStr:
                         SaveData();
+                        break;
+
+                    case DoContactsInactiveUnfollowStr:
+                        DoContactsInactiveUnfollow();
                         break;
 
                     case PauseStr:
