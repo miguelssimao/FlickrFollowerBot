@@ -225,6 +225,46 @@ namespace FlickrFollowerBot
                     {
                         Config.SeleniumBrowserArguments = Enumerable.Empty<string>();
                     }
+
+                    if (!string.IsNullOrWhiteSpace(config["ChromeBinaryLocation"]))
+                    {
+                        if(config["ChromeBinaryLocation"][1] == ':')
+                        {
+                            Config.ChromeBinaryLocation = config["ChromeBinaryLocation"];
+                        }
+                        else if(config["ChromeBinaryLocation"][0] == '\\')
+                        {
+                            Config.ChromeBinaryLocation = ExecPath + config["ChromeBinaryLocation"];
+                        }
+                        else
+                        {
+                            Config.ChromeBinaryLocation = ExecPath + "\\" + config["ChromeBinaryLocation"];
+                        }
+                    }
+                    else
+                    {
+                        Config.ChromeBinaryLocation = ExecPath;
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(config["ChromeDriverLocation"]))
+                    {
+                        if(config["ChromeDriverLocation"][1] == ':')
+                        {
+                            Config.ChromeDriverLocation = config["ChromeDriverLocation"];
+                        }
+                        else if(config["ChromeDriverLocation"][0] == '\\')
+                        {
+                            Config.ChromeDriverLocation = ExecPath + config["ChromeDriverLocation"];
+                        }
+                        else
+                        {
+                            Config.ChromeDriverLocation = ExecPath + "\\" + config["ChromeDriverLocation"];
+                        }
+                    }
+                    else
+                    {
+                        Config.ChromeDriverLocation = ExecPath;
+                    }
                 }
                 catch (FormatException ex)
                 {
