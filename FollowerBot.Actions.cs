@@ -323,10 +323,11 @@ namespace FlickrFollowerBot
                         else
                         {
                             Log.LogWarning("ACTION STOPPED : THERE ARE NO MORE INACTIVE USERS TO UNFOLLOW");
+                            todo = 0;
                             break; // no retry
                         }
                     }
-                    todo--;
+                    if (todo > 0) todo--;
                 }
                 catch (Exception ex)
                 {
