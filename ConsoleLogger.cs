@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.Logging;
 
 namespace FlickrFollowerBot
@@ -22,6 +22,9 @@ namespace FlickrFollowerBot
             switch (logLevel)
             {
                 case LogLevel.Critical:
+                    Log(ConsoleColor.Red, formatter(state, exception), ConsoleColor.DarkRed, exception);
+                    break;
+                    
                 case LogLevel.Error:
                     Log(ConsoleColor.Red, formatter(state, exception), ConsoleColor.DarkRed, exception);
                     break;
