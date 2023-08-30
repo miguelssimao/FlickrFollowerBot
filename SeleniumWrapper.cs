@@ -38,10 +38,9 @@ namespace FlickrFollowerBot
             return new SeleniumWrapper(new ChromeDriver(path, options), botSeleniumTimeoutSec);
         }
 
-        /// <param name="uri">exemple http://127.0.0.1:4444/wd/hub </param>
         public static SeleniumWrapper NewRemoteSeleniumWrapper(string configUri, string w, string h, string binary, IEnumerable<string> seleniumBrowserArguments, float botSeleniumTimeoutSec)
         {
-            if (!Uri.TryCreate(configUri, UriKind.Absolute, out Uri uri)) // may be a hostname ?
+            if (!Uri.TryCreate(configUri, UriKind.Absolute, out Uri uri)) 
             {
                 uri = new Uri("http://" + configUri + ":4444/wd/hub");
             }
@@ -268,7 +267,7 @@ namespace FlickrFollowerBot
 
         #region IDisposable Support
 
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false; 
         private IWebDriver WebDriver;
 
         protected virtual void Dispose(bool disposing)
@@ -299,12 +298,10 @@ namespace FlickrFollowerBot
         {
             string dt = DateTime.Now.ToString("yyyyMMdd-HHmmss");
 
-            // save HTML
             string html = JsDriver.ExecuteScript("return document.documentElement.innerHTML").ToString()
                 .Replace("href=\"/", "href=\"https://www.flickr.com/");
             File.WriteAllText(Path.Combine(basePath, string.Concat(userName, '.', dt, ".html")), html);
 
-            // sage image
             Screenshot ss = ((ITakesScreenshot)WebDriver).GetScreenshot();
             ss.SaveAsFile(Path.Combine(basePath, string.Concat(userName, '.', dt, ".png")));
         }
