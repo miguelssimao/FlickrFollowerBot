@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.Logging;
 
 namespace FlickrFollowerBot
@@ -29,10 +29,6 @@ namespace FlickrFollowerBot
 
             return 0;
         }
-
-        // Utility classes should not have public constructors
-        protected Program()
-        {
-        }
+        protected Program(){}
     }
 }
