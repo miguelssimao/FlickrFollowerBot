@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,54 +14,27 @@ namespace FlickrFollowerBot
         {
             public string UserContactUrl = null;
 
-            /// <summary>
-            /// List of URL of the contact'photos
-            /// </summary>
             public Queue<string> ContactsToFav = new Queue<string>();
 
-            /// <summary>
-            /// List of URL of the contact'photos
-            /// </summary>
             public Queue<string> ContactsToFollow = new Queue<string>();
 
-            /// <summary>
-            /// List of URL of the contact'photos
-            /// </summary>
             public Queue<string> PhotosToFav = new Queue<string>();
 
-            /// <summary>
-            /// List of URL of the contact'photos
-            /// </summary>
             public Queue<string> ContactsToUnfollow = new Queue<string>();
 
-            /// <summary>
-            /// Logon Cookies date
-            /// </summary>
             public Nullable<DateTime> CookiesInitDate = null;
 
             public IEnumerable<object> Cookies = new List<object>();
             public IDictionary<string, string> SessionStorage = new Dictionary<string, string>();
             public IDictionary<string, string> LocalStorage = new Dictionary<string, string>();
 
-            /// <summary>
-            /// Last refresh date
-            /// </summary>
             public Nullable<DateTime> MyContactsUpdate = null;
 
-            /// <summary>
-            /// List of URL of the contact'photos
-            /// </summary>
             public HashSet<string> MyContacts = new HashSet<string>();
 
-            /// <summary>
-            /// List of URL of the contact'photos
-            /// </summary>
             public HashSet<string> MyContactsBanned = new HashSet<string>();
         }
 
-        /// <summary>
-        /// Not banned if don t follow back
-        /// </summary>
         private readonly HashSet<string> MyContactsInTryout = new HashSet<string>();
 
         private string JsonPath;
@@ -103,7 +76,7 @@ namespace FlickrFollowerBot
                 if (File.Exists(fn))
                 {
                     PersistenceData tmp = JsonConvert.DeserializeObject<PersistenceData>(File.ReadAllText(fn, Encoding.UTF8));
-                    Data.CookiesInitDate = tmp.CookiesInitDate ?? tmp.MyContactsUpdate ?? DateTime.UtcNow; // manage cache from previous version
+                    Data.CookiesInitDate = tmp.CookiesInitDate ?? tmp.MyContactsUpdate ?? DateTime.UtcNow; 
 
                     if (Config.BotUsePersistenceLimitHours > 0 && DateTime.UtcNow < Data.CookiesInitDate.Value.AddHours(Config.BotUsePersistenceLimitHours))
                     {
@@ -126,13 +99,13 @@ namespace FlickrFollowerBot
                         if (tmp.ContactsToFollow != null)
                         {
                             Data.ContactsToFollow = new Queue<string>(tmp.ContactsToFollow
-                                .Except(Data.MyContacts).Except(Data.MyContactsBanned)); // some contacts may have been already added manualy
+                                .Except(Data.MyContacts).Except(Data.MyContactsBanned)); 
                             Log.LogDebug("$ContactsToFollow #{0}", Data.ContactsToFollow.Count);
                         }
                         if (tmp.ContactsToFav != null)
                         {
                             Data.ContactsToFav = new Queue<string>(tmp.ContactsToFav
-                                .Except(Data.MyContacts).Except(Data.MyContactsBanned)); // some contacts may have been already added manualy
+                                .Except(Data.MyContacts).Except(Data.MyContactsBanned)); 
                             Log.LogDebug("$ContactsToFav #{0}", Data.ContactsToFav.Count);
                         }
                         if (tmp.ContactsToUnfollow != null)
