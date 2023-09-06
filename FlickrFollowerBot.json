@@ -49,7 +49,7 @@
 	"CssContactPhotos": ".contact-list-name>a[rel=\"contact\"][href*=\"/photos/\"]",
 	"CssContactRemove": "input#contactChangerButtonRemove",
 	"CssContactTable": "table.contact-list-table tbody tr",
-	"CssContactUnfollow": "button.following-flickr-user-button span.unfollow",
+	"CssContactUnfollow": "button.following-flickr-user-button",
 	"CssContactUrl": "tbody tr td.contact-list-name a[rel=\"contact\"][href*=\"/photos/\"]",
 	"CssCookiesIframe": ".truste_popframe",
 	"CssError500": ".error-500-page-view",
