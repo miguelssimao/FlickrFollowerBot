@@ -7,8 +7,10 @@ An improved and updated version of the Flickr Follower Bot, originally made by [
 - Updated CSS selectors
 - Updated dependencies
 - Fixed the signing in process
+- Fixed the list of blocked users
 - Fixed the DoContactsUnfollow task
 - Added the ability to accept cookies
+- Added the DetectContactsFromPhoto task
 - Added the DoContactsInactiveUnfollow task
 - Updated Selenium arguments and some methods
 
@@ -23,6 +25,14 @@ An improved and updated version of the Flickr Follower Bot, originally made by [
 
 ![.NET Core](https://github.com/smf33/FlickrFollowerBot/workflows/.NET%20Core/badge.svg) ![Docker](https://github.com/smf33/FlickrFollowerBot/workflows/Docker/badge.svg) ![Docker Compose](https://github.com/smf33/FlickrFollowerBot/workflows/Docker%20Compose/badge.svg)
 
+- **(new)** Follow users that faved a photo: 
+```
+dotnet run BotTasks=DetectContactsFromPhoto=PHOTO_URL_HERE,DoContactsFollow
+```
+- **(new)** Unfollow inactive users from your contact list: 
+```
+dotnet run BotTasks=DoContactsInactiveUnfollow
+```
 For a list of commands and instructions, please refer to the [original repository](https://github.com/smf33/FlickrFollowerBot#usage).
 
 ## Configuration
@@ -45,7 +55,8 @@ Task names are case insensitive.
 
 | Name | Description |
 | :--- | :---------- |
-| **DoContactsInactiveUnfollow** | Search through contacts list and unfollow users that have not uploaded any new photos since **ContactsLastUpload** months ago |
+| **DoContactsInactiveUnfollow** | Search through contact list and unfollow users that have not uploaded any new photos since **ContactsLastUpload** months ago |
+| **DetectContactsFromPhoto** | Push contacts for **DoContactsFollow** and **DoContactsFav** tasks queue. An URL must be specified for this task |
 
 - For a list of the main tasks, please refer to the [original repository](https://github.com/smf33/FlickrFollowerBot#availeable-taks).
 
