@@ -56,7 +56,10 @@ namespace FlickrFollowerBot
         {
             Log.LogDebug("GET {0}", partialOrNotUrl);
             string target;
-            if (partialOrNotUrl.StartsWith(Config.UrlRoot, StringComparison.OrdinalIgnoreCase))
+            if (partialOrNotUrl.StartsWith(Config.UrlRoot, StringComparison.OrdinalIgnoreCase) ||
+                partialOrNotUrl.StartsWith(Config.UrlRootAlt, StringComparison.OrdinalIgnoreCase) ||
+                partialOrNotUrl.StartsWith(Config.UrlRootWww, StringComparison.OrdinalIgnoreCase) ||
+                partialOrNotUrl.StartsWith(Config.UrlRootWwwAlt, StringComparison.OrdinalIgnoreCase))
             {
                 target = partialOrNotUrl;
             }
