@@ -25,6 +25,36 @@ namespace FlickrFollowerBot
             return ret;
         }
 
+        private IEnumerable<string> GetContactListBanned(string subUrl)
+        {
+            MoveTo(Data.UserContactUrl + subUrl);
+            List<string> ret = Selenium.GetAttributes(Config.CssContactBlocked)
+                .ToList();
+            int page = 2;
+            while (Selenium.GetElements("a[href*=\"/?page=" + page.ToString(CultureInfo.InvariantCulture) + "\"]", true, true).Any())
+            {
+                MoveTo(Data.UserContactUrl + subUrl + "/?page=" + page.ToString(CultureInfo.InvariantCulture));
+                ret.AddRange(Selenium.GetAttributes(Config.CssContactBlocked));
+                page++;
+            }
+            return ret;
+        }
+
+        private IEnumerable<string> GetContactListFromFavs(string subUrl)
+        {
+            MoveTo(subUrl);
+            List<string> ret = Selenium.GetAttributes(Config.CssFavoritePhotos)
+                .ToList();
+            int page = 2;
+            while (Selenium.GetElements("a[href*=\"/page" + page.ToString(CultureInfo.InvariantCulture) + "/\"]", true, true).Any())
+            {
+                MoveTo(subUrl + "/page" + page.ToString(CultureInfo.InvariantCulture) + "/");
+                ret.AddRange(Selenium.GetAttributes(Config.CssFavoritePhotos));
+                page++;
+            }
+            return ret;
+        }
+
         private void AddForced(string configName, string configValue, Queue<string> queue)
         {
             if (!string.IsNullOrWhiteSpace(configValue))
@@ -65,7 +95,7 @@ namespace FlickrFollowerBot
                 Data.MyContacts = GetContactList(Config.UrlContacts).ToHashSet();
                 Log.LogDebug("$MyContacts ={0}", Data.MyContacts.Count);
 
-                Data.MyContactsBanned = GetContactList(Config.UrlContactsBlocked).ToHashSet();
+                Data.MyContactsBanned = GetContactListBanned(Config.UrlContactsBlocked).ToHashSet();
                 Log.LogDebug("$MyContactsBanned ={0}", Data.MyContactsBanned.Count);
 
                 Data.MyContactsUpdate = DateTime.UtcNow;
@@ -360,7 +390,7 @@ namespace FlickrFollowerBot
                         WaitHumanizer();// the url reload may break a waiting ball
 
                         // issue detection : Manage limit to 20 follow on a new account : https://www.flickr.com/help/forum/en-us/72157651299881165/  Then there seem to be another limit
-                        if (Selenium.GetElements(Config.CssContactFollow).Any()) // may be slow so will wait if required
+                        if (Selenium.GetElements(Config.CssContactFollow, true, true).Any()) // will not wait
                         {
                             WaitHumanizer();// give a last chance
                             if (Selenium.GetElements(Config.CssContactFollow, true, true).Any())
@@ -370,10 +400,10 @@ namespace FlickrFollowerBot
                             }
                         }
                         // hang issue detection
-                        if (Selenium.GetElements(Config.CssModalWaiterBalls, true, true).Any()) // will not wait
+                        if (Selenium.GetElements(Config.CssWaiterBalls, true, true).Any()) // will not wait
                         {
                             WaitHumanizer();// give a last chance...
-                            if (Selenium.GetElements(Config.CssModalWaiterBalls, true, true).Any()) // will not wait
+                            if (Selenium.GetElements(Config.CssWaiterBalls, true, true).Any()) // will not wait
                             {
                                 Log.LogWarning("ACTION STOPPED : SEEMS FLICKR HANG ON THIS CONTACT ({0})", uri);
                                 break; // no retry
@@ -423,17 +453,17 @@ namespace FlickrFollowerBot
                 if (!inError && !Selenium.GetElements(Config.CssPhotoFaved).Any()) // will wait a little if required because it s an expected state
                 {
                     WaitHumanizer();// give a last chance...
-                    if (!Selenium.GetElements(Config.CssPhotoFaved, true, true).Any()) // will wait a little if required because it s an expected state
+                    if (!Selenium.GetElements(Config.CssPhotoFaved, true, true).Any()) // will not wait
                     {
                         Log.LogWarning("ACTION STOPPED : SEEMS USER ({0}) CAN'T FAV ANYMORE", url);
                         inError = true;
                     }
                 }
                 // hang issue detection
-                if (!inError && Selenium.GetElements(Config.CssModalWaiterBalls, true, true).Any()) // will not wait
+                if (!inError && Selenium.GetElements(Config.CssWaiterBalls, true, true).Any()) // will not wait
                 {
                     WaitHumanizer();// give a last chance...
-                    if (Selenium.GetElements(Config.CssModalWaiterBalls, true, true).Any()) // will not wait
+                    if (Selenium.GetElements(Config.CssWaiterBalls, true, true).Any()) // will not wait
                     {
                         Log.LogWarning("ACTION STOPPED : SEEMS FLICKR HANG ON THIS PICTURE ({0})", url);
                         inError = true;
@@ -491,6 +521,74 @@ namespace FlickrFollowerBot
                 }
                 Log.LogDebug("$ContactsToFav -{0}", c - Data.ContactsToFav.Count);
             }
+        }
+
+        private void DetectContactsFromPhoto(string currentTask)
+        {
+            if (!currentTask.Contains("="))
+            {
+                Log.LogWarning("ACTION STOPPED : NO URL WAS SPECIFIED FOR {0}", currentTask);
+                return; // stop here
+            }
+
+            string[] url = currentTask.ToLower().Split("=");
+            if (string.IsNullOrEmpty(url[1]))
+            {
+                Log.LogWarning("ACTION STOPPED : NO URL WAS SPECIFIED FOR {0}", url[0].ToUpper());
+                return; // stop here
+            }
+
+            bool checkUri = Uri.IsWellFormedUriString(url[1], UriKind.Absolute);
+            if (!checkUri)
+            {
+                Log.LogWarning("ACTION STOPPED : THIS URL ({0}) IS INVALID OR INCOMPLETE", url[1]);
+                return; // stop here
+            }
+
+            string photoUrl = url[1];
+            if (Regex.IsMatch(photoUrl, @".*\/([\d]+)\/"))
+            {
+                photoUrl = Regex.Match(url[1], @".*\/([\d]+)\/").ToString();
+            }
+            else
+            {
+                if (Regex.IsMatch(photoUrl, @".*\/([\d]+)"))
+                {
+                   photoUrl = Regex.Match(url[1], @".*\/([\d]+)").ToString() + "/"; 
+                }
+                else
+                {
+                    Log.LogWarning("ACTION STOPPED : THIS URL ({0}) IS NOT A PHOTO", photoUrl);
+                    return; // stop here
+                }
+            }
+            if (Regex.IsMatch(photoUrl, @".*\/([\d]+@n[\d]+)\/"))
+            {
+                string[] tempUrl = Regex.Split(photoUrl, @"(.*)\/([\d]+@n[\d]+)\/([\d]+)");
+                photoUrl = tempUrl[1] + "/" + tempUrl[2].ToUpper() + "/" + tempUrl[3] + "/";
+            }
+            string favUrl = photoUrl.Remove(photoUrl.Length - 1, 1) + Config.UrlFavorites;
+
+            IEnumerable<string> list = GetContactListFromFavs(favUrl)
+                .Except(Data.MyContacts)
+                .Except(Data.MyContactsBanned)
+                .ToList(); // Solve
+
+            int c = Data.ContactsToFollow.Count;
+            foreach (string needToFollow in list
+                .Except(Data.ContactsToFollow))
+            {
+                Data.ContactsToFollow.Enqueue(needToFollow);
+            }
+            Log.LogDebug("$ContactsToFollow +{0}", Data.ContactsToFollow.Count - c);
+
+            c = Data.ContactsToFav.Count;
+            foreach (string needToFollow in list
+                .Except(Data.ContactsToFav))
+            {
+                Data.ContactsToFav.Enqueue(needToFollow);
+            }
+            Log.LogDebug("$ContactsToFav +{0}", Data.ContactsToFav.Count - c);
         }
 
         private void DetectContactsUnfollowBack()
