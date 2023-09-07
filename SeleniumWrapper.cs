@@ -137,11 +137,11 @@ namespace FlickrFollowerBot
             links.ElementAt(index).Click();
         }
 
-        public void ClickThisIfClickable(string cssSelector, int index)
+        public void ClickThisIfClickable(string cssSelector, int index = 0)
         {
             if (index == 0)
             {
-                WaitUntilElementClickable(cssSelector, index).Click();
+                WaitUntilElementClickable(cssSelector).Click();
             }
             else
             {
