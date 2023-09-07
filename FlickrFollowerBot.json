@@ -25,7 +25,7 @@
 	"BotSeleniumTimeoutSec": 30,
 	"BotStepMaxWaitMs": 5000,
 	"BotStepMinWaitMs": 3000,
-	"BotTasks": "DetectContactsFollowBack,DetectContactsUnfollowBack,DetectExplored,Save,DoContactsFollow,DoContactsFav,DoContactsUnfollow,Wait,Loop,DoContactsInactiveUnfollow,DetectContactsFavs",
+	"BotTasks": "DetectContactsFollowBack,DetectContactsUnfollowBack,DetectExplored,Save,DoContactsFollow,DoContactsFav,DoContactsUnfollow,Wait,Loop,DoContactsInactiveUnfollow,DetectContactsFromPhoto",
 	"BotUnfollowTaskBatchMaxLimit": 80,
 	"BotUnfollowTaskBatchMinLimit": 20,
 	"BotUnfollowTaskInactiveMaxLimit": 6,
