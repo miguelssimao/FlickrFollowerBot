@@ -27,7 +27,7 @@ namespace FlickrFollowerBot
         private const string SearchKeywordsStr = "SEARCHKEYWORDS";
         private const string WaitStr = "WAIT";
         private const string DoContactsInactiveUnfollowStr = "DOCONTACTSINACTIVEUNFOLLOW";
-        private const string DetectContactsFromPhotoStr = "DETECTCONTACTSFROMPHOTO=";
+        private const string DetectContactsFromPhotoStr = "DETECTCONTACTSFROMPHOTO";
 
         private static readonly string ExecPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -143,7 +143,7 @@ namespace FlickrFollowerBot
                         break;
 
                     case DetectContactsFromPhotoStr:
-                    case string CT when CT.StartsWith(DetectContactsFromPhotoStr):
+                    case string CT when CT.StartsWith(DetectContactsFromPhotoStr + "="):
                         DetectContactsFromPhoto(curTask);
                         break;
 
