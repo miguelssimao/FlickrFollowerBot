@@ -98,6 +98,12 @@ namespace FlickrFollowerBot
             internal string CssContactEdit;
             internal string CssContactCheck;
             internal string CssContactRemove;
+            internal string UrlFavorites;
+            internal string CssFavoritePhotos;
+            internal string CssContactBlocked;
+            internal string UrlRootAlt;
+            internal string UrlRootWww;
+            internal string UrlRootWwwAlt;
         }
 
         private Configuration Config;
@@ -165,7 +171,13 @@ namespace FlickrFollowerBot
                     PortugueseYears = config["PortugueseYears"],
                     CssContactEdit = config["CssContactEdit"],
                     CssContactCheck = config["CssContactCheck"],
-                    CssContactRemove = config["CssContactRemove"]
+                    CssContactRemove = config["CssContactRemove"],
+                    UrlFavorites = config["UrlFavorites"],
+                    CssFavoritePhotos = config["CssFavoritePhotos"],
+                    CssContactBlocked = config["CssContactBlocked"],
+                    UrlRootAlt = config["UrlRootAlt"],
+                    UrlRootWww = config["UrlRootWww"],
+                    UrlRootWwwAlt = config["UrlRootWwwAlt"]
                 };
 
                 try
