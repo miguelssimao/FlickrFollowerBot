@@ -32,6 +32,8 @@ namespace FlickrFollowerBot
 
             public HashSet<string> MyContacts = new HashSet<string>();
 
+            public HashSet<string> Myself = new HashSet<string>();
+
             public HashSet<string> MyContactsBanned = new HashSet<string>();
         }
 
@@ -94,6 +96,10 @@ namespace FlickrFollowerBot
                             {
                                 Data.MyContactsBanned = tmp.MyContactsBanned;
                                 Log.LogDebug("$MyContactsBanned #{0}", Data.MyContactsBanned.Count);
+                            }
+                            if (tmp.Myself != null)
+                            {
+                                Data.Myself = tmp.Myself;
                             }
                         }
                         if (tmp.ContactsToFollow != null)
@@ -168,6 +174,7 @@ namespace FlickrFollowerBot
                     tmp.MyContactsUpdate = Data.MyContactsUpdate;
                     tmp.MyContacts = Data.MyContacts;
                     tmp.MyContactsBanned = Data.MyContactsBanned;
+                    tmp.Myself = Data.Myself;
                 }
                 File.WriteAllText(JsonPath + Config.BotUserEmail + ".json", JsonConvert.SerializeObject(tmp, Formatting.Indented), Encoding.UTF8);
             }
