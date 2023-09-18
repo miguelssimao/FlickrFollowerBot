@@ -55,6 +55,14 @@ namespace FlickrFollowerBot
             return ret;
         }
 
+        private IEnumerable<string> GetMyself()
+        {
+            string[] Myself = Regex.Split(Data.UserContactUrl, @"(.*)\/people\/(.*)", RegexOptions.IgnoreCase);
+            string MyselfURL = Myself[1] + "/photos/" + Myself[2] + "/";
+            List<string> ret = new List<string>{MyselfURL};
+            return ret;
+        }
+
         private void AddForced(string configName, string configValue, Queue<string> queue)
         {
             if (!string.IsNullOrWhiteSpace(configValue))
@@ -99,6 +107,7 @@ namespace FlickrFollowerBot
                 Log.LogDebug("$MyContactsBanned ={0}", Data.MyContactsBanned.Count);
 
                 Data.MyContactsUpdate = DateTime.UtcNow;
+                Data.Myself = GetMyself().ToHashSet();
             }
 
             AddForced("AddContactsToFav", Config.AddContactsToFav, Data.ContactsToFav);
@@ -570,8 +579,9 @@ namespace FlickrFollowerBot
             string favUrl = photoUrl.Remove(photoUrl.Length - 1, 1) + Config.UrlFavorites;
 
             IEnumerable<string> list = GetContactListFromFavs(favUrl)
-                .Except(Data.MyContacts)
                 .Except(Data.MyContactsBanned)
+                .Except(Data.MyContacts)
+                .Except(Data.Myself)
                 .ToList(); // Solve
 
             int c = Data.ContactsToFollow.Count;
