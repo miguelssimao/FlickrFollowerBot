@@ -149,7 +149,7 @@ namespace FlickrFollowerBot
             }
         }
 
-        public IWebElement WaitUntilElementClickable(string cssSelector, int timeout = 10)
+        private IWebElement WaitUntilElementClickable(string cssSelector, int timeout = 10)
         {
             try
             {
