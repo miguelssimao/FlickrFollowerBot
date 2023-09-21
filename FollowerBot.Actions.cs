@@ -356,6 +356,7 @@ namespace FlickrFollowerBot
                             Selenium.ClickThisIfClickable(Config.CssContactEdit, i);
                             Selenium.Click(Config.CssContactCheck);
                             Selenium.Click(Config.CssContactRemove);
+                            Data.MyContacts.Remove(Selenium.GetElementHref(Config.CssContactUrl, i));
                             Log.LogDebug("REMOVED {0}", Selenium.GetElementHref(Config.CssContactUrl, i));
                             WaitHumanizer();
                             ++removed;
