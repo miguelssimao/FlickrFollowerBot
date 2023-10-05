@@ -37,8 +37,7 @@ dotnet run BotTasks=DoContactsInactiveUnfollow
 ```
 For a list of commands and instructions, please refer to the [original repository](https://github.com/smf33/FlickrFollowerBot#usage).
 
-## Configuration
-### New settings
+## New settings
 This repository introduces quite a few new settings, but most of them are HTML or CSS selectors.
 These are some of the new settings that influence new features:
 
@@ -52,7 +51,7 @@ These are some of the new settings that influence new features:
 
 - For a list of the main settings, please refer to the [original repository](https://github.com/smf33/FlickrFollowerBot#main-settings).
 
-### New tasks
+## New tasks
 Task names are case insensitive.  
 
 | Name | Description |
