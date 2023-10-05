@@ -3,6 +3,7 @@
 An improved and updated version of the Flickr Follower Bot, originally made by [smf33](https://github.com/smf33) in .NET Core, using a Chrome client and Selenium.
 
 **Changelog:**
+```
 - Added new settings
 - Updated CSS selectors
 - Updated dependencies
@@ -13,6 +14,7 @@ An improved and updated version of the Flickr Follower Bot, originally made by [
 - Added the DetectContactsFromPhoto task
 - Added the DoContactsInactiveUnfollow task
 - Updated Selenium arguments and some methods
+```
 
 *Tags: Flickr, Chrome, Selenium, C#, .Net, Core, bot, robot*
 
