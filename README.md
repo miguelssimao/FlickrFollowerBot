@@ -5,8 +5,8 @@ An improved and updated version of the Flickr Follower Bot, originally made by [
 **Changelog:**
 ```
 - Added new settings
-- Updated CSS selectors
 - Updated dependencies
+- Updated CSS selectors
 - Fixed the signing in process
 - Fixed the list of blocked users
 - Fixed the DoContactsUnfollow task
