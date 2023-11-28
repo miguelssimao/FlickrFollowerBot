@@ -1,4 +1,4 @@
-# Flickr Follower Bot
+# FlickrFollowerBot
 
 An improved and updated version of the Flickr Follower Bot, originally made by [smf33](https://github.com/smf33) in .NET Core, using a Chrome client and Selenium.
 
