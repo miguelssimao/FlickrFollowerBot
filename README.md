@@ -41,13 +41,15 @@ For the full list of commands and instructions, please refer to the [original re
 This repository introduces quite a few new settings, but most of them are HTML or CSS selectors.
 These are some of the new settings that influence new features:
 
-| Parameter | Description |
-| :-------- | :---------- |
-| **ChromeBinaryLocation** | The relative or full path where Chrome.exe is located |
-| **ChromeDriverLocation** | The relative or full path where ChromeDriver.exe is located |
-| **ContactsLastUpload** | How many months since your contacts last uploaded, so the bot can determine inactive users. Default value is **12** (months) |
-| **PortugueseMonths** | Translated term for **months**. If you use Flickr in any language other than English or Portuguese, then you should change this setting to the equivalent translation |
-| **PortugueseYears** | Translated term for **years**. If you use Flickr in any language other than English or Portuguese, then you should change this setting to the equivalent translation |
+| Parameter | Description | Default |
+| :-------- | :-------- | :---------- |
+| **ChromeBinaryLocation** | The relative or full path where Chrome.exe is located | chrome-win64\\chrome.exe |
+| **ChromeDriverLocation** | The relative or full path where ChromeDriver.exe is located | chrome-win64 |
+| **ContactsLastUpload** | How many months since your contacts last uploaded | 12 |
+| **PortugueseMonths*** | Translated term for **months** | meses |
+| **PortugueseYears*** | Translated term for **years** | anos |
+
+*if you use Flickr in any language other than English or Portuguese, then you should change this setting to the equivalent translation
 
 For the list of main settings, please refer to the [original repository](https://github.com/smf33/FlickrFollowerBot#main-settings).
 
