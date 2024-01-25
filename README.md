@@ -13,7 +13,7 @@ An improved and updated version of the Flickr Follower Bot, originally made by [
 - Added the ability to accept cookies
 - Added the DetectContactsFromPhoto task
 - Added the DoContactsInactiveUnfollow task
-- Updated Selenium arguments and some methods
+- Updated Selenium arguments, parameters and functions
 ```
 
 *Tags: Flickr, Chrome, Selenium, C#, .Net, Core, bot, robot*
@@ -44,7 +44,7 @@ These are some of the new settings that influence new features:
 | Parameter | Description | Default |
 | :-------- | :-------- | :---------- |
 | **ChromeBinaryLocation** | The relative or full path for Chrome.exe | chrome-win64\\chrome.exe |
-| **ChromeDriverLocation** | The relative or full path where ChromeDriver.exe is located | chrome-win64 |
+| **ChromeDriverLocation** | The relative or full path for ChromeDriver.exe's location | chrome-win64 |
 | **ContactsLastUpload** | How many months since your contacts last uploaded | 12 |
 | **PortugueseMonths*** | Translated term for **months** | meses |
 | **PortugueseYears*** | Translated term for **years** | anos |
