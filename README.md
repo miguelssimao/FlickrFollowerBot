@@ -43,7 +43,7 @@ These are some of the new settings that influence new features:
 
 | Parameter | Description | Default |
 | :-------- | :-------- | :---------- |
-| **ChromeBinaryLocation** | The relative or full path for Chrome.exe | chrome.exe |
+| **ChromeBinaryLocation** | The relative or full path for Chrome.exe | chrome-win64\\chrome.exe |
 | **ChromeDriverLocation** | The relative or full path where ChromeDriver.exe is located | chrome-win64 |
 | **ContactsLastUpload** | How many months since your contacts last uploaded | 12 |
 | **PortugueseMonths*** | Translated term for **months** | meses |
