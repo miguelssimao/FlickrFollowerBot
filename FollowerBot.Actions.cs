@@ -368,7 +368,7 @@ namespace FlickrFollowerBot
                             break; // no retry
                         }
                     }
-                    if (todo > 0) todo--;
+                    todo--;
                 }
                 catch (Exception ex)
                 {
@@ -572,6 +572,7 @@ namespace FlickrFollowerBot
                     return; // stop here
                 }
             }
+            
             if (Regex.IsMatch(photoUrl, @".*\/([\d]+@n[\d]+)\/"))
             {
                 string[] tempUrl = Regex.Split(photoUrl, @"(.*)\/([\d]+@n[\d]+)\/([\d]+)");
