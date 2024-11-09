@@ -351,7 +351,7 @@ namespace FlickrFollowerBot
                             }
                         }
 
-                        if (resultInteger == 0 || (resultInteger != 0 && resultInteger > stop))
+                        if (resultInteger == 0 || resultInteger > stop)
                         {
                             Selenium.ClickThisIfClickable(Config.CssContactEdit, i);
                             Selenium.Click(Config.CssContactCheck);
