@@ -115,7 +115,8 @@ class FlickrFollowerBot:
             "Loop",
             "Wait",
         ]
-        listbox_height = min(len(menu_items), 12)
+        
+        listbox_height = min(len(menu_items), 16)
 
         menu_frame = ttk.LabelFrame(middle_frame, text="-")
         menu_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
