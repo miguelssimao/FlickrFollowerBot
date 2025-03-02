@@ -20,7 +20,7 @@ namespace FlickrFollowerBot
         {
             ChromeOptions options = new ChromeOptions
             {
-                PageLoadStrategy = PageLoadStrategy.Normal,
+                PageLoadStrategy = PageLoadStrategy.Eager,
                 BinaryLocation = binary
             };
             options.AddArgument("--window-size=" + w + "," + h);
